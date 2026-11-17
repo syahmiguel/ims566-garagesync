@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="GarageSync Service Jobs Table" />
+  <meta name="author" content="Adlin Syahmi" />
+  <title>Service Jobs | GarageSync</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- Mobile Top Header -->
+  <header class="navbar navbar-dark bg-dark border-bottom border-secondary d-lg-none sticky-top px-3">
+    <a class="navbar-brand fw-bold" href="dashboard.html">
+      <i class="bi bi-gear-wide-connected text-danger me-2"></i>GarageSync
+    </a>
+    <button class="btn btn-outline-secondary btn-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarNav" aria-label="Toggle menu">
+      <i class="bi bi-list fs-5"></i>
+    </button>
+  </header>
+
+  <div class="d-flex min-vh-100">
+    <!-- Left Sidebar Navigation -->
+    <aside class="offcanvas-lg offcanvas-start bg-dark border-end border-secondary sidebar-nav" tabindex="-1" id="sidebarNav">
+      <div class="offcanvas-header border-bottom border-secondary">
+        <span class="offcanvas-title fw-bold"><i class="bi bi-gear-wide-connected text-danger me-2"></i>GarageSync</span>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarNav" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body d-flex flex-column p-3 h-100">
+        <a href="dashboard.html" class="d-none d-lg-flex align-items-center mb-3 text-white text-decoration-none fs-5 fw-bold">
+          <i class="bi bi-gear-wide-connected text-danger me-2"></i>GarageSync
+        </a>
+        <hr class="d-none d-lg-block border-secondary mt-0" />
+        <ul class="nav nav-pills flex-column mb-auto gap-1">
+          <li class="nav-item">
+            <a href="dashboard.html" class="nav-link text-secondary">
+              <i class="bi bi-speedometer2 me-2"></i>Dashboard
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="jobs.html" class="nav-link active text-white">
+              <i class="bi bi-wrench-adjustable me-2"></i>Service Jobs
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="inventory.html" class="nav-link text-secondary">
+              <i class="bi bi-box-seam me-2"></i>Parts Inventory
+            </a>
+          </li>
+        </ul>
+        <hr class="border-secondary" />
+        <div class="d-flex align-items-center justify-content-between">
+          <span class="small text-secondary"><i class="bi bi-person-circle me-1"></i><span id="navUserDisplay">Adlin Syahmi</span></span>
+          <button id="logoutBtn" class="btn btn-outline-danger btn-sm">Logout</button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="flex-grow-1 d-flex flex-column">
+      <main class="container-fluid p-4 flex-grow-1">
+        <div class="d-flex flex-wrap justify-content-between align-items-center pb-3 mb-4 border-bottom border-secondary gap-2">
+          <div>
+            <span class="badge text-bg-danger mb-1">DATA VIEW 01</span>
+            <h1 class="h3 fw-bold mb-0">Motorcycle Service &amp; Modification Jobs</h1>
+          </div>
+          <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#addJobModal">
+            <i class="bi bi-plus-lg me-1"></i>Add Service Job
+          </button>
+        </div>
+
+        <!-- Search & Filter Bar -->
+        <div class="card border-secondary mb-4">
+          <div class="card-body">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label for="jobSearchInput" class="form-label small text-secondary">Search Job ID, Customer, or Model</label>
+                <input type="text" id="jobSearchInput" class="form-control" placeholder="e.g., Y15ZR, Ahmad, ECU..." />
+              </div>
+              <div class="col-md-4">
+                <label for="jobStatusFilter" class="form-label small text-secondary">Filter Status</label>
+                <select id="jobStatusFilter" class="form-select">
+                  <option value="ALL">All Work Orders</option>
+                  <option value="In Progress">In Progress</option>
+                  <option value="Pending Parts">Pending Parts</option>
+                  <option value="Completed">Completed</option>
+                </select>
+              </div>
+              <div class="col-md-2 d-flex align-items-end">
+                <button id="resetJobFilters" class="btn btn-outline-secondary w-100">Reset</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hardcoded Data Table (Visible Directly in HTML + Appended Browser Storage Rows) -->
+        <div class="card border-secondary">
+          <div class="table-responsive">
+            <table class="table table-dark table-hover align-middle mb-0" id="jobsTable">
+              <thead>
+                <tr>
+                  <th>Job ID</th>
+                  <th>Date</th>
+                  <th>Customer</th>
+                  <th>Motorcycle</th>
+                  <th>Service / Upgrade Details</th>
+                  <th>Technician</th>
+                  <th>Status</th>
+                  <th class="text-end">Total (RM)</th>
+                </tr>
+              </thead>
+              <tbody id="jobsTableBody">
+                <tr>
+                  <td class="fw-bold text-danger">JOB-1041</td>
+                  <td class="small text-secondary">2026-11-10</td>
+                  <td>Ahmad Syafiq</td>
+                  <td><span class="badge text-bg-secondary">Yamaha Y15ZR V2</span></td>
+                  <td>Racing Clutch System &amp; ECU Remap Stage 2</td>
+                  <td>Hafiz</td>
+                  <td><span class="badge text-bg-warning">In Progress</span></td>
+                  <td class="text-end fw-semibold">RM 680.00</td>
+                </tr>
+                <tr>
+                  <td class="fw-bold text-danger">JOB-1042</td>
+                  <td class="small text-secondary">2026-11-11</td>
+                  <td>Nurul Aina</td>
+                  <td><span class="badge text-bg-secondary">Yamaha Y16ZR ABS</span></td>
+                  <td>TST Integrated Tail Lamp &amp; LED Strobe Install</td>
+                  <td>Adlin</td>
+                  <td><span class="badge text-bg-success">Completed</span></td>
+                  <td class="text-end fw-semibold">RM 245.00</td>
+                </tr>
+                <tr>
+                  <td class="fw-bold text-danger">JOB-1043</td>
+                  <td class="small text-secondary">2026-11-12</td>
+                  <td>Danish Haikal</td>
+                  <td><span class="badge text-bg-secondary">Yamaha LC135 V8</span></td>
+                  <td>Full Red Salaya Bolt Kit &amp; CNC Bracket Fitting</td>
+                  <td>Adlin</td>
+                  <td><span class="badge text-bg-success">Completed</span></td>
+                  <td class="text-end fw-semibold">RM 190.00</td>
+                </tr>
+                <tr>
+                  <td class="fw-bold text-danger">JOB-1044</td>
+                  <td class="small text-secondary">2026-11-13</td>
+                  <td>Faris Iskandar</td>
+                  <td><span class="badge text-bg-secondary">Yamaha Y15ZR V1</span></td>
+                  <td>Battery Replacement (Koyoko 12V) &amp; Charging Check</td>
+                  <td>Hafiz</td>
+                  <td><span class="badge text-bg-warning">In Progress</span></td>
+                  <td class="text-end fw-semibold">RM 135.00</td>
+                </tr>
+                <tr>
+                  <td class="fw-bold text-danger">JOB-1045</td>
+                  <td class="small text-secondary">2026-11-14</td>
+                  <td>Zulhilmi Razak</td>
+                  <td><span class="badge text-bg-secondary">Yamaha Y16ZR</span></td>
+                  <td>Chain Degrease, Sprocket Set &amp; Quick Coating</td>
+                  <td>Syahmi</td>
+                  <td><span class="badge text-bg-info">Pending Parts</span></td>
+                  <td class="text-end fw-semibold">RM 310.00</td>
+                </tr>
+                <tr>
+                  <td class="fw-bold text-danger">JOB-1046</td>
+                  <td class="small text-secondary">2026-11-14</td>
+                  <td>Irfan Hakim</td>
+                  <td><span class="badge text-bg-secondary">Yamaha LC135 V6</span></td>
+                  <td>Carburetor Tuning &amp; Valve Clearance Service</td>
+                  <td>Syahmi</td>
+                  <td><span class="badge text-bg-success">Completed</span></td>
+                  <td class="text-end fw-semibold">RM 160.00</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+
+      <footer class="border-top border-secondary py-3 px-4 text-secondary small d-flex flex-wrap justify-content-between">
+        <span>GarageSync Content Management Portal &bull; IMS566 (UiTM)</span>
+        <span>&copy; 2026 GarageSync</span>
+      </footer>
+    </div>
+  </div>
+
+  <!-- Add Service Job Modal (Saves to Browser Storage) -->
+  <div class="modal fade" id="addJobModal" tabindex="-1" aria-labelledby="addJobModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content border-secondary">
+        <form id="addJobForm">
+          <div class="modal-header border-secondary">
+            <h2 class="modal-title h5 fw-bold" id="addJobModalLabel">Add New Service Job</h2>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-3">
+              <label for="newCustomer" class="form-label small">Customer Name</label>
+              <input type="text" class="form-control" id="newCustomer" placeholder="e.g., Khairul Anuar" required />
+            </div>
+            <div class="mb-3">
+              <label for="newModel" class="form-label small">Motorcycle Model</label>
+              <select class="form-select" id="newModel" required>
+                <option value="Yamaha Y15ZR V2">Yamaha Y15ZR V2</option>
+                <option value="Yamaha Y16ZR ABS">Yamaha Y16ZR ABS</option>
+                <option value="Yamaha LC135 V8">Yamaha LC135 V8</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="newService" class="form-label small">Service / Upgrade Details</label>
+              <input type="text" class="form-control" id="newService" placeholder="e.g., Full Engine Oil & Sprocket Set" required />
+            </div>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label for="newTechnician" class="form-label small">Technician</label>
+                <input type="text" class="form-control" id="newTechnician" value="Adlin" required />
+              </div>
+              <div class="col-md-6">
+                <label for="newStatus" class="form-label small">Status</label>
+                <select class="form-select" id="newStatus">
+                  <option value="In Progress">In Progress</option>
+                  <option value="Pending Parts">Pending Parts</option>
+                  <option value="Completed">Completed</option>
+                </select>
+              </div>
+            </div>
+            <div class="mt-3">
+              <label for="newCost" class="form-label small">Estimated Cost (RM)</label>
+              <input type="number" step="0.01" class="form-control" id="newCost" placeholder="150.00" required />
+            </div>
+          </div>
+          <div class="modal-footer border-secondary">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-danger">Save to Browser Storage</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

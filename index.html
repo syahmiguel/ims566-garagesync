@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="GarageSync - Workshop & Parts Management Login" />
+  <meta name="author" content="Adlin Syahmi" />
+  <title>Login | GarageSync</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="bg-body-tertiary d-flex flex-column min-vh-100">
+
+  <main class="container my-auto py-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6 col-lg-5">
+        <div class="card border-secondary shadow">
+          <div class="card-body p-4 p-md-5">
+            <div class="text-center mb-4">
+              <i class="bi bi-gear-wide-connected fs-1 text-danger"></i>
+              <h1 class="h4 fw-bold mt-2 mb-1">GarageSync</h1>
+              <p class="text-secondary small mb-0">Workshop &amp; Parts Inventory Portal</p>
+            </div>
+
+            <!-- Hardcoded Credentials Mentioned Directly on Page -->
+            <div class="alert alert-secondary py-2 px-3 small mb-4" role="note">
+              <div class="fw-semibold mb-1"><i class="bi bi-key me-1"></i>Demo Login Credentials:</div>
+              <div>Username: <code>admin</code> &nbsp;|&nbsp; Password: <code>ims566</code></div>
+            </div>
+
+            <!-- Auth Tabs -->
+            <ul class="nav nav-pills nav-fill mb-3" role="tablist">
+              <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="login-tab" data-bs-toggle="pill" data-bs-target="#login-pane" type="button" role="tab">Sign In</button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="register-tab" data-bs-toggle="pill" data-bs-target="#register-pane" type="button" role="tab">Register</button>
+              </li>
+            </ul>
+
+            <div id="authAlert" class="alert d-none py-2 small" role="alert"></div>
+
+            <div class="tab-content">
+              <!-- Login Form -->
+              <div class="tab-pane fade show active" id="login-pane" role="tabpanel">
+                <form id="loginForm" novalidate>
+                  <div class="mb-3">
+                    <label for="loginUsername" class="form-label small">Username</label>
+                    <input type="text" class="form-control" id="loginUsername" placeholder="admin" required />
+                  </div>
+                  <div class="mb-3">
+                    <label for="loginPassword" class="form-label small">Password</label>
+                    <input type="password" class="form-control" id="loginPassword" placeholder="ims566" required />
+                  </div>
+                  <div class="d-grid gap-2 mt-4">
+                    <button type="submit" class="btn btn-danger">Sign In</button>
+                    <button type="button" id="fillDemoBtn" class="btn btn-outline-secondary btn-sm">Auto-Fill Demo Login</button>
+                  </div>
+                </form>
+              </div>
+
+              <!-- Register Form -->
+              <div class="tab-pane fade" id="register-pane" role="tabpanel">
+                <form id="registerForm" novalidate>
+                  <div class="mb-3">
+                    <label for="regFullName" class="form-label small">Full Name</label>
+                    <input type="text" class="form-control" id="regFullName" placeholder="e.g., Adlin Syahmi" required />
+                  </div>
+                  <div class="mb-3">
+                    <label for="regUsername" class="form-label small">Username</label>
+                    <input type="text" class="form-control" id="regUsername" placeholder="Choose username" required />
+                  </div>
+                  <div class="mb-3">
+                    <label for="regPassword" class="form-label small">Password (min 6 chars)</label>
+                    <input type="password" class="form-control" id="regPassword" placeholder="Create password" required />
+                  </div>
+                  <div class="d-grid mt-4">
+                    <button type="submit" class="btn btn-danger">Create Account</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="py-3 text-center text-secondary small border-top border-secondary">
+    IMS566 Advanced Web Design Development &amp; Content Management &bull; UiTM
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="GarageSync Parts Inventory Catalog" />
+  <meta name="author" content="Adlin Syahmi" />
+  <title>Parts Inventory | GarageSync</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- Mobile Top Header -->
+  <header class="navbar navbar-dark bg-dark border-bottom border-secondary d-lg-none sticky-top px-3">
+    <a class="navbar-brand fw-bold" href="dashboard.html">
+      <i class="bi bi-gear-wide-connected text-danger me-2"></i>GarageSync
+    </a>
+    <button class="btn btn-outline-secondary btn-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarNav" aria-label="Toggle menu">
+      <i class="bi bi-list fs-5"></i>
+    </button>
+  </header>
+
+  <div class="d-flex min-vh-100">
+    <!-- Left Sidebar Navigation -->
+    <aside class="offcanvas-lg offcanvas-start bg-dark border-end border-secondary sidebar-nav" tabindex="-1" id="sidebarNav">
+      <div class="offcanvas-header border-bottom border-secondary">
+        <span class="offcanvas-title fw-bold"><i class="bi bi-gear-wide-connected text-danger me-2"></i>GarageSync</span>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarNav" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body d-flex flex-column p-3 h-100">
+        <a href="dashboard.html" class="d-none d-lg-flex align-items-center mb-3 text-white text-decoration-none fs-5 fw-bold">
+          <i class="bi bi-gear-wide-connected text-danger me-2"></i>GarageSync
+        </a>
+        <hr class="d-none d-lg-block border-secondary mt-0" />
+        <ul class="nav nav-pills flex-column mb-auto gap-1">
+          <li class="nav-item">
+            <a href="dashboard.html" class="nav-link text-secondary">
+              <i class="bi bi-speedometer2 me-2"></i>Dashboard
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="jobs.html" class="nav-link text-secondary">
+              <i class="bi bi-wrench-adjustable me-2"></i>Service Jobs
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="inventory.html" class="nav-link active text-white">
+              <i class="bi bi-box-seam me-2"></i>Parts Inventory
+            </a>
+          </li>
+        </ul>
+        <hr class="border-secondary" />
+        <div class="d-flex align-items-center justify-content-between">
+          <span class="small text-secondary"><i class="bi bi-person-circle me-1"></i><span id="navUserDisplay">Adlin Syahmi</span></span>
+          <button id="logoutBtn" class="btn btn-outline-danger btn-sm">Logout</button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="flex-grow-1 d-flex flex-column">
+      <main class="container-fluid p-4 flex-grow-1">
+        <div class="d-flex flex-wrap justify-content-between align-items-center pb-3 mb-4 border-bottom border-secondary">
+          <div>
+            <span class="badge text-bg-danger mb-1">DATA VIEW 02</span>
+            <h1 class="h3 fw-bold mb-0">Parts &amp; Maintenance Supplies Inventory</h1>
+          </div>
+          <span class="text-secondary small">Displaying <strong id="partCountBadge" class="text-white">0</strong> items</span>
+        </div>
+
+        <!-- Filter & Sort Bar -->
+        <div class="card border-secondary mb-4">
+          <div class="card-body">
+            <div class="row g-3">
+              <div class="col-md-5">
+                <label for="partSearchInput" class="form-label small text-secondary">Search SKU or Part Name</label>
+                <input type="text" id="partSearchInput" class="form-control" placeholder="e.g., Salaya, Koyoko, ECU..." />
+              </div>
+              <div class="col-md-4">
+                <label for="partCategoryFilter" class="form-label small text-secondary">Category</label>
+                <select id="partCategoryFilter" class="form-select">
+                  <option value="ALL">All Categories</option>
+                  <option value="Engine & ECU">Engine &amp; ECU</option>
+                  <option value="Hardware & CNC">Hardware &amp; CNC</option>
+                  <option value="Electrical & Lighting">Electrical &amp; Lighting</option>
+                  <option value="Maintenance & Fluids">Maintenance &amp; Fluids</option>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <label for="partSortSelect" class="form-label small text-secondary">Sort By</label>
+                <select id="partSortSelect" class="form-select">
+                  <option value="default">Default (SKU)</option>
+                  <option value="price-asc">Price: Low to High</option>
+                  <option value="price-desc">Price: High to Low</option>
+                  <option value="stock-asc">Stock: Lowest First</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Inventory Cards Grid -->
+        <div class="row g-4" id="inventoryGrid"></div>
+      </main>
+
+      <footer class="border-top border-secondary py-3 px-4 text-secondary small d-flex flex-wrap justify-content-between">
+        <span>GarageSync Content Management Portal &bull; IMS566 (UiTM)</span>
+        <span>&copy; 2026 GarageSync</span>
+      </footer>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
